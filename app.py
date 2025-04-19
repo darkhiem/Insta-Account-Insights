@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = 'EAATa4P6HtssBOZBC8xSzLOm7mMvkNXc9CpIZARayZA1guLaNeFjo0G37e3Q3LMRRcWPPRXK4bhSGzegeISEhZAjO4UKkhvbuRRZClcIZCFxxjddgmItaX9ioTfT5IGZAXBvQ2msVaIJUsIcfNeFO7ACQNArNJgrldBRaQETeb1d4jiXT58ld4MNlRq4cXWZCrNx6Jy18zeZCKaiUjgc6clmHd2sYZD'
+ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'  # Replace with your actual access token
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
