@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagram Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram Insights Viewer</h1>
+        <form method="POST">
+            <input type="text" name="handle" placeholder="Enter Instagram Handle" required>
+            <button type="submit">Get Insights</button>
+        </form>
+
+        {% if data %}
+            <div class="section">
+                <h2>Profile Info</h2>
+                <p><strong>Name:</strong> {{ data.profile.name }}</p>
+                <p><strong>Username:</strong> {{ data.profile.username }}</p>
+                <p><strong>Followers:</strong> {{ data.profile.followers_count }}</p>
+                <p><strong>Following:</strong> {{ data.profile.follows_count }}</p>
+                <p><strong>Media Count:</strong> {{ data.profile.media_count }}</p>
+                <img class="profile-pic" src="{{ data.profile.profile_picture_url }}" alt="Profile Picture">
+            </div>
+
+            <div class="section">
+                <h2>Account Insights Summary</h2>
+                <ul>
+                {% for metric, value in data.account_summary.items() %}
+                    <li><strong>{{ metric.replace('_', ' ').capitalize() }}:</strong> {{ value }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Top Performing Post</h2>
+                {% if data.top_post %}
+                    <p><strong>Caption:</strong> {{ data.top_post.caption }}</p>
+                    <p><strong>Engagement:</strong> {{ data.top_post.insights.engagement }}</p>
+                    <a href="{{ data.top_post.permalink }}" target="_blank">View Post</a>
+                {% else %}
+                    <p>No media insights available.</p>
+                {% endif %}
+            </div>
+
+            <div class="section">
+                <h2>Recent Media Insights</h2>
+                {% for media in data.media_summary %}
+                    <div class="media-card">
+                        <p><strong>Caption:</strong> {{ media.caption }}</p>
+                        <p><strong>Type:</strong> {{ media.type }}</p>
+                        <p><strong>Timestamp:</strong> {{ media.timestamp }}</p>
+                        <ul>
+                            {% for key, val in media.insights.items() %}
+                                <li>{{ key.replace('_', ' ').capitalize() }}: {{ val }}</li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{{ media.permalink }}" target="_blank">View Media</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
